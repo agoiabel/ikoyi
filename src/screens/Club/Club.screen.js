@@ -17,7 +17,7 @@ const Clubs = styled.View`
     width: 90%;
     margin: 30px auto;
 `;
-const Club = styled.View`
+const Club = styled.TouchableOpacity`
     background: ${props => props.backgroundColor};
     border-radius: 5px;
     letter-spacing: 0;
@@ -49,6 +49,12 @@ class ClubScreen extends React.Component {
         this.props.navigation.navigate(screen);
     }
 
+    navigateToClub = club => {
+        this.props.navigation.navigate('ClubSingle', {
+            club: club
+        });
+    }
+
     render() {
 
         let clubContainer = (
@@ -58,7 +64,7 @@ class ClubScreen extends React.Component {
         if (this.props.status == 200) {
             let clubs = this.props.clubs.map(club => {
                 return (
-                    <Club key={club.id} backgroundColor={'#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)}>
+                    <Club key={club.id} backgroundColor={'#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)} onPress={() => this.navigateToClub(club)}>
                         <Text>{club.club_name}</Text>
                     </Club>
                 )

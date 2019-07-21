@@ -22,7 +22,7 @@ const Container = styled.View`
     align-items: center;
 
     background: #F96060;
-    padding: 15px 0 15px 0;
+    padding: 45px 0 15px 0;
 `;
 const View = styled.View`
     display: flex;

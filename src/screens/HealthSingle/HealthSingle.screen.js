@@ -12,7 +12,7 @@ const Container = styled.View`
     width: 100%;
     margin: 0 auto;
 `;
-const Tip = styled.TouchableOpacity`
+const Tip = styled.View`
     background: #FFFFFF;
 
     margin-bottom: 10px;
@@ -21,15 +21,15 @@ const Tip = styled.TouchableOpacity`
     border-color: #ddd;
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding: 5px 5px;
 `;
 const TipImage = styled.View`
-    width: 30%;
+    width: 100%;
     margin-right: 10px;
 `;
 const View = styled.View`
-    width: 70%;
+    width: 100%;
     padding: 5px 5px;
 `;
 const Info = styled.View`
@@ -49,63 +49,32 @@ const Body = styled.Text`
 
 class HealthScreen extends React.Component {
 
-    componentWillMount() {
-        this.props.getAll();
-    }
-
     onPressHandler = screen => {
         this.props.navigation.navigate(screen)
     }
 
-    navigateTo = health => {
-        this.props.navigation.navigate('HealthSingle', {
-            health: health
-        });
-    }
-
     render() {
-        let container = (
-            <Loading />
-        );
+        let health = this.props.navigation.getParam('health');
 
-        if (this.props.status == 200) {
-            let healths = this.props.healths.map(health => {
-                return (
-                    <Tip key={health.id} onPress={() => this.navigateTo(health)}>
+        return (
+            <Container>
+                <Header title={'Health Tips'} onPressHandler={() => this.onPressHandler('Dashboard')} />
+
+                <ScrollView contentContainerStyle={styles.tips}>
+                    <Tip key={health.id}>
                         <TipImage>
-                            <Image source={{uri: health.image}} resizeMode={'cover'} style={{ width: '100%', height: 150 }} />
+                            <Image source={{ uri: health.image }} resizeMode={'cover'} style={{ width: '100%', height: 150 }} />
                         </TipImage>
                         <View>
                             <Info>
                                 <Title>{health.title}</Title>
                                 <Body>
-                                    {health.body.length > 200 ?
-                                        (
-                                            <React.Fragment>
-                                                {`${health.body.substring(0, 200)}...`}
-                                            </React.Fragment>
-                                        ) :
-                                        <React.Fragment>{health.body}</React.Fragment>
-                                    }
+                                    {health.body}
                                 </Body>
                             </Info>
                         </View>
                     </Tip>
-                )
-            });
-
-            container = (
-                <ScrollView contentContainerStyle={styles.tips}>
-                    {healths}
                 </ScrollView>
-            )
-        }
-
-
-        return (
-            <Container>
-                <Header title={'Health Tips'} onPressHandler={() => this.onPressHandler('Dashboard')} />
-                { container }
             </Container>
         )
     }

@@ -1,18 +1,27 @@
 import React from 'react';
-import { Alert } from 'react-native';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Input from '../../components/Input';
 import validate from '../../shared/validation';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Secondary } from '../../components/Button/Button.component';
+import { Alert, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { startAuth } from '../../shared/actions/Auth.action';
 
-import { startAuth, sampleTest } from '../../shared/actions/Auth.action';
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        width: '90%',
+        marginVertical: 25,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        justifyContent: 'space-between'
+    }
+});
 
 class Login extends React.Component {
 
     state = {
-        response: null,
-        sample_message: null,
         formIsValid: false,
         submittingForm: false,
         showPasswordField: false,
@@ -50,6 +59,7 @@ class Login extends React.Component {
 
     navigateToPassword = () => {
         this.setState({
+            submittingForm: false,
             showPasswordField: !this.state.showPasswordField
         });
     }
@@ -119,9 +129,10 @@ class Login extends React.Component {
         return this.onPressHandler('Advert');
     }
 
-
     render() {
-
+        let subTitle = (
+            <Text>Please login to continue using our app</Text>
+        );
         let field = (
             <FormView>
                 <Input
@@ -137,15 +148,20 @@ class Login extends React.Component {
                 />
 
                 <Secondary onPress={this.sendCode}
-                           loading={this.state.submittingForm}
-                           disabled={(!this.state.controls.phone.valid)}
-                           loading={this.state.submittingForm}>
-                                Continue
+                    loading={this.state.submittingForm}
+                    disabled={(!this.state.controls.phone.valid)}
+                    loading={this.state.submittingForm}>
+                    Continue
                 </Secondary>
             </FormView>
         )
 
         if (this.state.showPasswordField) {
+            subTitle = (
+                <BackButton onPress={this.navigateToPassword}>
+                    <Ionicons name={"ios-arrow-round-back"} color="rgba(249, 96, 96, 0.5)" size={30} />
+                </BackButton>
+            );
             field = (
                 <FormView>
                     <Input
@@ -158,10 +174,6 @@ class Login extends React.Component {
                         placeholder={this.state.controls.code.placeholder}
                         onChangeText={(value) => this.changeHandler('code', value, '')}
                     />
-                    {/* <Secondary onPress={() => this.onPressHandler('Advert')}>
-                        Login
-                    </Secondary> */}
-
                     <Secondary onPress={this.confirmCodeHandler}>
                         Login
                     </Secondary>
@@ -169,30 +181,24 @@ class Login extends React.Component {
             )
         }
 
+
         return (
-            <Container>
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <View>
                     <Header>
                         <BoldText>Login Now</BoldText>
-                        <Text>Please login to continue using our app</Text>
-
+                        {subTitle}
                         <Text>{this.state.response}</Text>
                         <Text>{this.state.sample_message}</Text>
                     </Header>
                 </View>
 
-                { field }
-            </Container>
+                {field}
+            </KeyboardAvoidingView>
         )
     }
 }
 
-const Container = styled.View`
-    flex: 1;
-    width: 90%;
-    margin: 25px auto 25px auto;
-    justify-content: space-between;
-`;
 const View = styled.View``;
 const Header = styled.View`
     margin-top: 20px;
@@ -203,11 +209,11 @@ const BoldText = styled.Text`
     color: #3E4A59;
 `;
 const Text = styled.Text`
-    font-family: ArialRoundedMTBold;
     font-size: 13px;
     color: #8B959A;
 `;
 const FormView = styled.View``;
+const BackButton = styled.TouchableOpacity``;
 
 
 
@@ -216,16 +222,14 @@ const mapStateToProps = state => {
         msg: state.AuthReducer.msg,
         code: state.AuthReducer.code,
         status: state.AuthReducer.status,
-
-        sample_status: state.AuthReducer.sample_status,
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
         startAuth: payload => dispatch(startAuth(payload)),
-        sampleTest: payload => dispatch(sampleTest(payload)),
     }
 }
+
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

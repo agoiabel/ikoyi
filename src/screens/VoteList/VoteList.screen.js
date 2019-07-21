@@ -1,10 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Header from '../../components/Header';
 
 import { ScrollView, StyleSheet } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
+import Loading from '../../components/Loading';
+import { getAll } from '../../shared/actions/VoteList.action';
 
 const styles = StyleSheet.create({
     tips: {
@@ -54,59 +57,70 @@ const Text = styled.Text`
 
 
 
-class VoteList extends React.Component {
 
+
+class VoteList extends React.Component {
 
     onPressHandler = screen => {
         this.props.navigation.navigate(screen)
     }
 
+    componentWillMount() {
+        this.props.getAll();
+    }
+
+    navigateSinglePage = vote => {
+        this.props.navigation.navigate('Vote', {
+            vote: vote
+        });
+    }
+
     render() {
+
+        let container = (
+            <Loading />
+        );
+
+        if (this.props.status == 200) {
+            let vote_lists = this.props.vote_lists.map(vote_list => {
+                return (
+                    <Tip key={vote_list.id} onPress={() => this.navigateSinglePage(vote_list)}>
+                        <AntDesign name={"questioncircle"} color="#F96060" size={15} />
+                        <Text>
+                            {vote_list.poll_questions}
+                        </Text>
+                    </Tip>
+                )
+            });
+
+            container = (
+                <ScrollView contentContainerStyle={styles.infos}>
+                    { vote_lists }
+                </ScrollView>
+            )
+        }
+
         return (
             <Container>
                 <Header title={'Vote'} onPressHandler={() => this.onPressHandler('Dashboard')} />
 
-                <ScrollView contentContainerStyle={styles.tips}>
-                    <Tip onPress={() => this.onPressHandler('Vote')}>
-                        <AntDesign name={"questioncircle"} color="#F96060" size={15} />
-                        <Text>
-                            Buhari vote 1
-                        </Text>
-                    </Tip>
-                    <Tip onPress={() => this.onPressHandler('Vote')}>
-                        <AntDesign name={"questioncircle"} color="#F96060" size={15} />
-                        <Text>
-                            Buhari vote 2
-                        </Text>
-                    </Tip>
-                    <Tip onPress={() => this.onPressHandler('Vote')}>
-                        <AntDesign name={"questioncircle"} color="#F96060" size={15} />
-                        <Text>
-                            Buhari vote 3
-                        </Text>
-                    </Tip>
-                    <Tip onPress={() => this.onPressHandler('Vote')}>
-                        <AntDesign name={"questioncircle"} color="#F96060" size={15} />
-                        <Text>
-                            Buhari vote 4
-                        </Text>
-                    </Tip>
-                    <Tip onPress={() => this.onPressHandler('Vote')}>
-                        <AntDesign name={"questioncircle"} color="#F96060" size={15} />
-                        <Text>
-                            Buhari vote 5
-                        </Text>
-                    </Tip>
-                    <Tip onPress={() => this.onPressHandler('Vote')}>
-                        <AntDesign name={"questioncircle"} color="#F96060" size={15} />
-                        <Text>
-                            Buhari vote 6
-                        </Text>
-                    </Tip>
-                </ScrollView>
+                { container }
             </Container>
         )
     }
 }
 
-export default VoteList;
+
+const mapStateToProps = state => {
+    return {
+        vote_lists: state.VoteListReducer.vote_lists,
+        status: state.VoteListReducer.get_all_status,
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        getAll: () => dispatch(getAll())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VoteList);

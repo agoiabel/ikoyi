@@ -43,39 +43,23 @@ const Text = styled.Text`
 class VoteScreen extends React.Component {
 
     state = {
-        votes: []
+        options: []
     }
 
-    componentWillMount() {
-        this.props.getAll();
+    componentDidMount() {
+        this.format(this.props.navigation.getParam('vote'));
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if ((prevProps.status !== this.props.status) && this.props.status == 200) {
-            this.format(this.props.votes);
-        }
-    }
+    format = vote => {
+        let options = vote.options.map(poll_option => {
 
-    format = votes => {
-        console.dir(votes);
+            poll_option['is_picked'] = false;
 
-        let newVotes = votes.map(vote => {
-
-            vote.poll_options.map(poll_option => {
-
-                poll_option['is_picked'] = false;
-
-                return poll_option;
-            });
-
-            return vote;
+            return poll_option;
         });
 
-
-        console.dir(newVotes);
-
         this.setState({
-            votes: newVotes
+            options: options
         });
     }
 
@@ -83,56 +67,47 @@ class VoteScreen extends React.Component {
         this.props.navigation.navigate(screen)
     }
 
-    render() {
 
+    render() {
 
         let container = (
             <Loading />
         );
 
+        if (this.state.options) {
+            let vote = this.props.navigation.getParam('vote');
 
-        if (this.props.status == 200) {
-            let votes = this.state.votes.map(vote => {
-
-                let options = vote.poll_options.map(option => {
-                    let icon = <FontAwesome name={"circle-o"} color="#8B959A" size={10} />
-                    if (option.is_picked) {
-                        icon = <FontAwesome name={"circle"} color="#8B959A" size={10} />
-                    }
-                    return (
-                        <Option key={option.id}>
-                            {icon}
-                            <Text>{option.option_name}</Text>
-                        </Option>
-                    )
-                });
-
-
+            let options = this.state.options.map(option => {
+                let icon = <FontAwesome name={"circle-o"} color="#8B959A" size={10} />
+                if (option.is_picked) {
+                    icon = <FontAwesome name={"circle"} color="#8B959A" size={10} />
+                }
                 return (
-                    <Vote key={vote.id}>
-                        <Question>
-                            {vote.poll_title}
-                        </Question>
-                        {options}
-                    </Vote>
+                    <Option key={option.id}>
+                        {icon}
+                        <Text>{option.option_name}</Text>
+                    </Option>
                 )
             });
 
+            let voteContainer = (
+                <Vote key={vote.id}>
+                    <Question>
+                        {vote.poll_questions}
+                    </Question>
+                    {options}
+                </Vote>
+            )
 
             container = (
                 <Votes>
-                    {votes}
-
+                    { voteContainer }
                     <Secondary onPress={this.send}>
                         Vote
                     </Secondary>
                 </Votes>
             )
         }
-
-
-
-
 
         return (
             <Container>

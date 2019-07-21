@@ -4,60 +4,34 @@ import styled from 'styled-components';
 import Header from '../../components/Header';
 import { Image, ScrollView, StyleSheet } from 'react-native';
 
-import Loading from '../../components/Loading';
-import { getAll } from '../../shared/actions/Session.action';
 
-
-class SessionScreen extends React.Component {
-
-    componentWillMount() {
-        this.props.getAll();
-    }
+class SessionSingle extends React.Component {
 
     onPressHandler = screen => {
-        this.props.navigation.navigate(screen);
-    }
-
-    navigateSinglePage = newInfo => {
-        this.props.navigation.navigate('SessionSingle', {
-            newInfo: newInfo
-        });
+        this.props.navigation.navigate(screen)
     }
 
     render() {
-
-        let container = (
-            <Loading />
-        );
-
-
-        if (this.props.status == 200) {
-            let news = this.props.news.map(newInfo => {
-                return (
-                    <Info key={newInfo.id} onPress={() => this.navigateSinglePage(newInfo)}>
-                        <Image source={{uri: newInfo.news_image}} style={{ width: '100%', height: 200}}/>
-
-                        <NewContainer>
-                            <NewTitle>
-                                {newInfo.news_title}
-                            </NewTitle>
-                        </NewContainer>
-                    </Info>
-                )
-            });
-
-            container = (
-                <ScrollView contentContainerStyle={styles.infos}>
-                    { news }
-                </ScrollView>
-            )
-        }
+        let newInfo = this.props.navigation.getParam('newInfo');
 
         return (
             <Container>
                 <Header title={'News'} onPressHandler={() => this.onPressHandler('Dashboard')} />
 
-                { container }
+                <ScrollView contentContainerStyle={styles.infos}>
+                    <Info>
+                        <Image source={{ uri: newInfo.news_image }} style={{ width: '100%', height: 200 }} />
+
+                        <NewContainer>
+                            <NewTitle>
+                                {newInfo.news_title}
+                            </NewTitle>
+                            <NewBody>
+                                {newInfo.news_body}
+                            </NewBody>
+                        </NewContainer>
+                    </Info>
+                </ScrollView>
             </Container>
         )
     }
@@ -82,7 +56,7 @@ const Container = styled.View`
     margin: 0 auto;
 `;
 
-const Info = styled.TouchableOpacity`
+const Info = styled.View`
     margin-bottom: 15px;
 
     background: #FFFFFF;
@@ -104,23 +78,21 @@ const NewContainer = styled.View`
     margin: 10px auto 0 auto;
 `;
 const NewTitle = styled.Text`
-    font-size: 16px;
+    font-size: 18px;
     color: #313131;
     letter-spacing: 1.6;
+    margin-bottom: 50px;
+    font-weight: bold;
 `;
+const NewBody = styled.Text``;
 
 
 
 const mapStateToProps = state => {
-    return {
-        news: state.SessionReducer.news,
-        status: state.SessionReducer.get_all_status,
-    }
+    return {}
 }
 const mapDispatchToProps = dispatch => {
-    return {
-        getAll: () => dispatch(getAll())
-    }
+    return {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SessionScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(SessionSingle);

@@ -1,9 +1,22 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Header from '../../components/Header';
+import { Image, ScrollView, StyleSheet } from 'react-native';
+import Loading from '../../components/Loading';
+import { getAll } from '../../shared/actions/About.action';
 
-import Input from '../../components/Input';
-import { Secondary } from '../../components/Button/Button.component';
+
+const styles = StyleSheet.create({
+    tips: {
+        width: '90%',
+        marginTop: 30,
+        marginBottom: 30,
+        marginRight: 'auto',
+        marginLeft: 'auto',
+        paddingBottom: 25,
+    }
+});
 
 
 const Container = styled.View`
@@ -21,44 +34,45 @@ const Title = styled.Text`
     margin: 30px 0;
 `;
 const Body = styled.Text``;
-const AboutImage = styled.Image`
-    margin: 30px 0;
-    width: 100%;
-    height: 200px;
-`;
 
 class About extends React.Component {
 
-    send = () => {}
+    componentWillMount() {
+        this.props.getAll();
+    }
 
     onPressHandler = screen => {
-        this.props.navigation.navigate(screen)
+        this.props.navigation.navigate(screen);
     }
 
     render() {
+        let container = (
+            <Loading />
+        );
+
+        if (this.props.status == 200) {
+            let about = this.props.about;
+
+            container = (
+                <ScrollView contentContainerStyle={styles.tips}>
+                    <Content>
+                        <Title>
+                            { about.title }
+                        </Title>
+                        <Image source={{ uri: about.image }} resizeMode={'cover'} style={{ width: '100%', height: 200, marginTop: 30, marginBottom: 30 }} />
+                        <Body>
+                            { about.body }
+                        </Body>
+                    </Content>
+                </ScrollView>
+            )
+        }
+
         return (
             <Container>
                 <Header title={'About'} onPressHandler={() => this.onPressHandler('Dashboard')} />
 
-                <Content>
-                    <Title>
-                        Club history
-                    </Title>
-
-                    <Body>
-                        Lor em Ip sum Lo rem Ips um Lo rem Ip sum Lor em Ip sum Lor em Ip sum Lor em Ips um Lo rem Ip sum
-                        Lor em Ip sum Lo rem Ips um Lo rem Ip sum Lor em Ip sum Lor em Ip sum Lor em Ips um Lo rem Ip sum
-                        Lor em Ip sum Lo rem Ips um Lo rem Ip sum Lor em Ip sum Lor em Ip sum Lor em Ips um Lo rem Ip sum
-                    </Body>
-
-                    <AboutImage source={require('../../images/new_4.jpeg')} />
-
-                    <Body>
-                        Lor em Ip sum Lo rem Ips um Lo rem Ip sum Lor em Ip sum Lor em Ip sum Lor em Ips um Lo rem Ip sum
-                        Lor em Ip sum Lo rem Ips um Lo rem Ip sum Lor em Ip sum Lor em Ip sum Lor em Ips um Lo rem Ip sum
-                        Lor em Ip sum Lo rem Ips um Lo rem Ip sum Lor em Ip sum Lor em Ip sum Lor em Ips um Lo rem Ip sum
-                    </Body>
-                </Content>
+                { container }
             </Container>
         )
     }
@@ -66,4 +80,16 @@ class About extends React.Component {
 
 
 
-export default About;
+const mapStateToProps = state => {
+    return {
+        about: state.AboutReducer.about,
+        status: state.AboutReducer.get_all_status,
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        getAll: () => dispatch(getAll())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(About);

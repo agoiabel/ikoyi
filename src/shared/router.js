@@ -1,15 +1,26 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
-import Club from '../screens/Club';
-import Vote from '../screens/Vote';
 import Login from '../screens/Login';
 import Advert from '../screens/Advert';
-import Health from '../screens/Health';
 import Onboard from '../screens/Onboard';
+
+import Club from '../screens/Club';
+import ClubSingle from '../screens/ClubSingle';
+
+import Health from '../screens/Health';
+import HealthSingle from '../screens/HealthSingle';
+
 import Gallery from '../screens/Gallery';
+import GallerySingle from '../screens/GallerySingle';
+
 import Session from '../screens/Session';
+import SessionSingle from '../screens/SessionSingle';
+
+import Vote from '../screens/Vote';
 import VoteList from '../screens/VoteList';
+
 import Security from '../screens/Security';
+
 import Customer from '../screens/Customer';
 import Promotion from '../screens/Promotion';
 import Dashboard from '../screens/Dashboard';
@@ -19,91 +30,119 @@ const RootStack = createSwitchNavigator({
         screen: Onboard,
         navigationOptions: {
             title: 'Onboard',
-            header: null //this will hide the header
+            header: null
         },
     },
     Login: {
         screen: Login,
         navigationOptions: {
             title: 'Login',
-            header: null //this will hide the header
+            header: null
         },
     },
     Advert: {
         screen: Advert,
         navigationOptions: {
             title: 'Advert',
-            header: null //this will hide the header
+            header: null
         },
     },
     Dashboard: {
         screen: Dashboard,
         navigationOptions: {
             title: 'Dashboard',
-            header: null //this will hide the header
+            header: null
         },
     },
     Gallery: {
         screen: Gallery,
         navigationOptions: {
             title: 'Gallery',
-            header: null //this will hide the header
+            header: null
+        },
+    },
+    GallerySingle: {
+        screen: GallerySingle,
+        navigationOptions: {
+            title: 'GallerySingle',
+            header: null
         },
     },
     Session: {
         screen: Session,
         navigationOptions: {
             title: 'Session',
-            header: null //this will hide the header
+            header: null
         },
     },
-    Customer: {
-        screen: Customer,
+    SessionSingle: {
+        screen: SessionSingle,
         navigationOptions: {
-            title: 'Customer',
-            header: null //this will hide the header
+            title: 'SessionSingle',
+            header: null
         },
     },
     VoteList: {
         screen: VoteList,
         navigationOptions: {
             title: 'VoteList',
-            header: null //this will hide the header
+            header: null
         },
     },
     Vote: {
         screen: Vote,
         navigationOptions: {
             title: 'Vote',
-            header: null //this will hide the header
+            header: null
         },
     },
     Health: {
         screen: Health,
         navigationOptions: {
             title: 'Health',
-            header: null //this will hide the header
+            header: null
         },
     },
-    Security: {
-        screen: Security,
+    HealthSingle: {
+        screen: HealthSingle,
         navigationOptions: {
-            title: 'Security',
-            header: null //this will hide the header
+            title: 'HealthSingle',
+            header: null
         },
     },
     Club: {
         screen: Club,
         navigationOptions: {
             title: 'Club',
-            header: null //this will hide the header
+            header: null
+        },
+    },
+    ClubSingle: {
+        screen: ClubSingle,
+        navigationOptions: {
+            title: 'ClubSingle',
+            header: null
+        },
+    },
+    Security: {
+        screen: Security,
+        navigationOptions: {
+            title: 'Security',
+            header: null
         },
     },
     Promotion: {
         screen: Promotion,
         navigationOptions: {
             title: 'Promotion',
-            header: null //this will hide the header
+            header: null
+        },
+    },
+    Customer: {
+        screen: Customer,
+        navigationOptions: {
+            title: 'Customer',
+            header: null
         },
     },
 }, {
