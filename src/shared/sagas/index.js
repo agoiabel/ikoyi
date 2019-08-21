@@ -5,6 +5,7 @@ import ClubSaga from './Club.saga';
 import VoteSaga from './Vote.saga';
 import AboutSaga from './About.saga';
 import HealthSaga from './Health.saga';
+import AdvertSaga from './Advert.saga';
 import SessionSaga from './Session.saga';
 import GallerySaga from './Gallery.saga';
 import SecuritySaga from './Security.saga';
@@ -17,6 +18,7 @@ function* rootSaga() {
         VoteSaga(),
         ClubSaga(),
         AboutSaga(),
+        AdvertSaga(),
         HealthSaga(),
         GallerySaga(),
         SessionSaga(),

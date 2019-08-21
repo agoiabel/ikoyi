@@ -4,6 +4,7 @@ import ClubReducer from './reducers/Club.reducer';
 import VoteReducer from './reducers/Vote.reducer';
 import AuthReducer from './reducers/Auth.reducer';
 import AboutReducer from './reducers/About.reducer';
+import AdvertReducer from './reducers/Advert.reducer';
 import HealthReducer from './reducers/Health.reducer';
 import SessionReducer from './reducers/Session.reducer';
 import GalleryReducer from './reducers/Gallery.reducer';
@@ -15,6 +16,7 @@ export default combineReducers({
     ClubReducer: ClubReducer,
     AuthReducer: AuthReducer,
     AboutReducer: AboutReducer,
+    AdvertReducer: AdvertReducer,
     HealthReducer: HealthReducer,
     SessionReducer: SessionReducer,
     GalleryReducer: GalleryReducer,
