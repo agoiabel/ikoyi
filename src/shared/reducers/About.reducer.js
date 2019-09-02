@@ -3,24 +3,30 @@ import { ABOUT } from '../constants/About.constant';
 
 
 const getAllWasSuccessFul = (state, action) => {
+
     return updateObject(state, {
         msg: action.payload.msg,
-        about: action.payload.data,
-        get_all_status: action.payload.status,
+        status: action.payload.status,
+        about: action.payload.data.about,
+        past_admins: action.payload.data.current,
+        current_admins: action.payload.data.past,
     });
 }
 const getAllWasUnSuccessFul = (state, action) => {
     return updateObject(state, {
         msg: action.payload.msg,
-        get_all_status: action.payload.status,
+        status: action.payload.status,
     });
 }
 
 
 const initialState = {
     msg: null,
+    status: null,
+
     about: null,
-    get_all_status: null
+    past_admins: null,
+    current_admins: null,
 };
 
 

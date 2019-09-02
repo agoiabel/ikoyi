@@ -29,7 +29,7 @@ const Container = styled.View`
     align-items: center;
     justify-content: center;
 
-    background: #F96060;
+    background: #E77618;
 `;
 
 export default Onboard;

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
 import { Image, ScrollView, StyleSheet } from 'react-native';
-import { getAll } from '../../shared/actions/Gallery.action';
+import { getAll } from '../../shared/actions/ClubGallery.action';
 
 
 const styles = StyleSheet.create({
@@ -53,20 +53,22 @@ const Content = styled.View`
     margin: 10px auto;
 `;
 
-class GalleryScreen extends React.Component {
+class ClubGallery extends React.Component {
 
     onPressHandler = screen => {
         this.props.navigation.navigate(screen)
     }
 
-    navigateSinglePage = gallery => {
-        this.props.navigation.navigate('GallerySingle', {
-            gallery: gallery
-        });
-    }
+    // navigateSinglePage = gallery => {
+    //     this.props.navigation.navigate('GallerySingle', {
+    //         gallery: gallery
+    //     });
+    // }
 
     componentWillMount() {
-        this.props.getAll();
+        this.props.getAll({
+            club_id: this.props.navigation.getParam('club_id')
+        });
     }
 
     render() {
@@ -78,7 +80,7 @@ class GalleryScreen extends React.Component {
         if (this.props.status == 200) {
             let gallaries = this.props.gallaries.map(gallery => {
                 return (
-                    <Gallery key={gallery.gallery_id} onPress={() => this.navigateSinglePage(gallery)}>
+                    <Gallery key={gallery.gallery_id} onPress={() => true}>
                         <Image source={{ uri: gallery.image }} resizeMode={'cover'} style={{ height: 200 }} />
                         <View>
                             <Title>{gallery.image_title}</Title>
@@ -111,8 +113,8 @@ class GalleryScreen extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        gallaries: state.GalleryReducer.gallaries,
-        status: state.GalleryReducer.get_all_status,
+        galleries: state.ClubGalleryReducer.galleries,
+        status: state.ClubGalleryReducer.get_all_status,
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -121,4 +123,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GalleryScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ClubGallery);

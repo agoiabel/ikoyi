@@ -38,9 +38,6 @@ const View = styled.View`
     padding: 5px 5px;
     background: #23271A;
     opacity: .5;
-
-    position: absolute;
-    bottom: 0;
     width: 100%;
 `;
 const Title = styled.Text`
@@ -53,7 +50,10 @@ const Body = styled.Text`
     color: #FFFFFF;
     font-size: 12px;
 `;
-
+const Content = styled.View`
+    width: 90%;
+    margin: 10px auto;
+`;
 
 class GalleryScreen extends React.Component {
 
@@ -68,15 +68,17 @@ class GalleryScreen extends React.Component {
             <Container>
                 <Header title={'Gallery'} onPressHandler={() => this.onPressHandler('Gallery')} />
                 <ScrollView contentContainerStyle={styles.tips}>
-                    <Gallery key={gallery.id} onPress={() => this.navigateTo(gallery)}>
-                        <Image source={{ uri: gallery.image }} resizeMode={'cover'} style={{ width: '100%', height: '100%' }} />
-                        <View>
-                            <Title>{gallery.image_title}</Title>
-                        </View>
-                        <Body>
+                    <Content>
+                        <Gallery key={gallery.id} onPress={() => this.navigateTo(gallery)}>
+                            <Image source={{ uri: gallery.image }} resizeMode={'cover'} style={{ width: '100%', height: 400 }} />
+                            <View>
+                                <Title>{gallery.image_title}</Title>
+                            </View>
+                            {/* <Body>
                             {gallery.image_description}
-                        </Body>
-                    </Gallery>
+                        </Body> */}
+                        </Gallery>
+                    </Content>
                 </ScrollView>
             </Container>
         )

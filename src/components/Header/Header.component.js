@@ -21,7 +21,7 @@ const Container = styled.View`
     flex-direction: row;
     align-items: center;
 
-    background: #F96060;
+    background: #E77618;
     padding: 45px 0 15px 0;
 `;
 const View = styled.View`

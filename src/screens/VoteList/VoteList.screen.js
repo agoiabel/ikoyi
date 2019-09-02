@@ -85,7 +85,7 @@ class VoteList extends React.Component {
             let vote_lists = this.props.vote_lists.map(vote_list => {
                 return (
                     <Tip key={vote_list.id} onPress={() => this.navigateSinglePage(vote_list)}>
-                        <AntDesign name={"questioncircle"} color="#F96060" size={15} />
+                        <AntDesign name={"questioncircle"} color="#E77618" size={15} />
                         <Text>
                             {vote_list.poll_questions}
                         </Text>

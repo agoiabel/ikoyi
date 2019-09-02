@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Input = ({label, ...props}) => {
 
-    const borderColor = (!props.valid && props.touched) ? '#F96060' : ((props.valid && props.touched) ? '#00C851' : 'rgba(173, 186, 200, 0.40)');
+    const borderColor = (!props.valid && props.touched) ? '#E77618' : ((props.valid && props.touched) ? '#00C851' : 'rgba(173, 186, 200, 0.40)');
 
     return (
         <View>

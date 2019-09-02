@@ -47,10 +47,10 @@ export const Primary = props => {
 }
 export const Secondary = props => {
 
-    let backgroundColor = 'rgb(249, 96, 96)';
+    let backgroundColor = 'rgb(231, 118, 24)';
 
     if (props.disabled) {
-        backgroundColor = 'rgba(249, 96, 96, 0.5)';
+        backgroundColor = 'rgba(231, 118, 24, 0.5)';
     }
 
     return (

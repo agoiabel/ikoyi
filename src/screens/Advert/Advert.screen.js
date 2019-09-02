@@ -12,11 +12,7 @@ class Advert extends React.Component {
     }
 
     componentDidMount() {
-        // setTimeout(() => {
-        //     this.onPressHandler();
-        // }, 3000);
-        //make api request to the backend
-        // this.props.getAll();
+        this.props.getAll();
     }
 
     render() {
@@ -50,15 +46,15 @@ const Container = styled.ImageBackground`
     align-items: center;
     justify-content: center;
 
-    background: #F96060;
+    background: #E77618;
     position: relative;
 `;
 const Icon = styled.TouchableOpacity`
     position: absolute;
-    top: 0;
-    right:0;
+    top: 5;
+    left: 1;
 
-    padding: 5px 5px;
+    padding: 20px 20px;
     background: #E77618;
 `;
 

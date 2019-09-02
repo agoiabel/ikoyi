@@ -45,13 +45,13 @@ class Dashboard extends React.Component {
                 <Header>
                     <Setting>
                         <HeaderView>
-                            <MaterialIcons name={"menu"} color="#F96060" size={20} />
+                            <MaterialIcons name={"menu"} color="#E77618" size={20} />
                         </HeaderView>
                         <View>
                             <Profile source={require('../../images/dangote-bloomberg.jpg')} />
                         </View>
                         <HeaderView>
-                            <MaterialCommunityIcons name={"lead-pencil"} color="#F96060" size={20} />
+                            <MaterialCommunityIcons name={"lead-pencil"} color="#E77618" size={20} />
                         </HeaderView>
                     </Setting>
                     <Owner>
@@ -61,10 +61,15 @@ class Dashboard extends React.Component {
                 </Header>
 
                 <ScrollView contentContainerStyle={styles.container}>
-
+                    <Card onPress={() => this.onPressHandler('About')}>
+                        <View>
+                            <Entypo name={"sports-club"} color="#6CB56E" size={30} />
+                            <Text>About Ikoyi Club</Text>
+                        </View>
+                    </Card>
                     <Card onPress={()=>this.onPressHandler('Session')}>
                         <View>
-                            <FontAwesome name={"newspaper-o"} color="#F96060" size={30} />
+                            <FontAwesome name={"newspaper-o"} color="#E77618" size={30} />
                             <Text>News/Events</Text>
                         </View>
                     </Card>
@@ -72,6 +77,18 @@ class Dashboard extends React.Component {
                         <View>
                             <AntDesign name={"home"} color="#3ECDE0" size={30} />
                             <Text>Club Sections</Text>
+                        </View>
+                    </Card>
+                    <Card onPress={() => this.onPressHandler('VoteList')}>
+                        <View>
+                            <MaterialCommunityIcons name={"vote-outline"} color="#E77618" size={30} />
+                            <Text>Voting</Text>
+                        </View>
+                    </Card>
+                    <Card onPress={() => this.onPressHandler('Gallery')}>
+                        <View>
+                            <SimpleLineIcons name={"picture"} color="#3ECDE0" size={30} />
+                            <Text>Gallery</Text>
                         </View>
                     </Card>
                     <Card onPress={() => this.onPressHandler('Security')}>
@@ -86,25 +103,7 @@ class Dashboard extends React.Component {
                             <Text>Health tips</Text>
                         </View>
                     </Card>
-                    <Card onPress={() => this.onPressHandler('VoteList')}>
-                        <View>
-                            <MaterialCommunityIcons name={"vote-outline"} color="#F96060" size={30} />
-                            <Text>Voting</Text>
-                        </View>
-                    </Card>
-                    <Card onPress={() => this.onPressHandler('Gallery')}>
-                        <View>
-                            <SimpleLineIcons name={"picture"} color="#3ECDE0" size={30} />
-                            <Text>Gallery</Text>
-                        </View>
-                    </Card>
-                    <Card onPress={() => this.onPressHandler('Customer')}>
-                        <View>
-                            <Entypo name={"sports-club"} color="#6CB56E" size={30} />
-                            <Text>About Ikoyi Club</Text>
-                        </View>
-                    </Card>
-                    <Card onPress={() => this.onPressHandler('Promotion')}>
+                    <Card onPress={() => this.onPressHandler('Promo')}>
                         <View>
                             <AntDesign name={"star"} color="#6CB56E" size={30} />
                             <Text>Promotions and Discount</Text>
@@ -126,8 +125,8 @@ const Container = styled.View`
     margin: 0 auto;
 `;
 const Header = styled.View`
-    background: #F96060;
-
+    padding-top: 25px;
+    background: #E77618;
     border-bottom-width: 1px;
     border-bottom-color: #D3D9E0;
 `;

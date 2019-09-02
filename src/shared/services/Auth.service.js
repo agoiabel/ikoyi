@@ -11,14 +11,3 @@ export const authStart = async payload => {
 
     return data;
 }
-
-export const sampleStart = async payload => {
-    const response = await post(payload, 'auth/store');
-    const data = await response.json();
-
-    if (response.status !== 200) {
-        throw new Error(data);
-    }
-
-    return data;
-}

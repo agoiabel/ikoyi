@@ -79,7 +79,7 @@ class SecurityScreen extends React.Component {
             let securities = this.props.securities.map(security => {
                 return (
                     <Tip key={security.id}>
-                        <FontAwesome name={"circle-o"} color="#F96060" size={15} />
+                        <FontAwesome name={"circle-o"} color="#E77618" size={15} />
                         <Text>
                             { security.info }
                         </Text>

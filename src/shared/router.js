@@ -1,10 +1,14 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
+import Promo from '../screens/Promo';
+
 import Login from '../screens/Login';
 import Advert from '../screens/Advert';
 import Onboard from '../screens/Onboard';
 
 import Club from '../screens/Club';
+import ClubNews from '../screens/ClubNews';
+import ClubGallery from '../screens/ClubGallery';
 import ClubSingle from '../screens/ClubSingle';
 
 import Health from '../screens/Health';
@@ -21,8 +25,7 @@ import VoteList from '../screens/VoteList';
 
 import Security from '../screens/Security';
 
-import Customer from '../screens/Customer';
-import Promotion from '../screens/Promotion';
+import About from '../screens/About';
 import Dashboard from '../screens/Dashboard';
 
 const RootStack = createSwitchNavigator({
@@ -124,6 +127,20 @@ const RootStack = createSwitchNavigator({
             header: null
         },
     },
+    ClubNews: {
+        screen: ClubNews,
+        navigationOptions: {
+            title: 'ClubNews',
+            header: null
+        },
+    },
+    ClubGallery: {
+        screen: ClubGallery,
+        navigationOptions: {
+            title: 'ClubGallery',
+            header: null
+        },
+    },
     Security: {
         screen: Security,
         navigationOptions: {
@@ -131,17 +148,17 @@ const RootStack = createSwitchNavigator({
             header: null
         },
     },
-    Promotion: {
-        screen: Promotion,
+    Promo: {
+        screen: Promo,
         navigationOptions: {
-            title: 'Promotion',
+            title: 'Promo',
             header: null
         },
     },
-    Customer: {
-        screen: Customer,
+    About: {
+        screen: About,
         navigationOptions: {
-            title: 'Customer',
+            title: 'About',
             header: null
         },
     },

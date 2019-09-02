@@ -106,7 +106,7 @@ class Login extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if ((prevProps.msg !== this.props.msg) && (this.props.status === 200)) {
-            this.navigateToPassword();
+            return this.navigateToPassword();
         }
         if ((prevProps.msg !== this.props.msg) && (this.props.status === 401)) {
             this.setState({
@@ -116,7 +116,7 @@ class Login extends React.Component {
         }
 
         if ((prevProps.sample_status !== this.props.sample_status) && (this.props.sample_status === 200)) {
-            this.setState({
+            return this.setState({
                 sample_message: this.props.sample_status
             });
         }
@@ -159,13 +159,14 @@ class Login extends React.Component {
         if (this.state.showPasswordField) {
             subTitle = (
                 <BackButton onPress={this.navigateToPassword}>
-                    <Ionicons name={"ios-arrow-round-back"} color="rgba(249, 96, 96, 0.5)" size={30} />
+                    <Ionicons name={"ios-arrow-round-back"} color="#E77618" size={30} />
                 </BackButton>
             );
             field = (
                 <FormView>
                     <Input
                         name={"code"}
+                        keyboardType={'number-pad'}
                         label={this.state.controls.code.label}
                         value={this.state.controls.code.value}
                         valid={this.state.controls.code.valid}

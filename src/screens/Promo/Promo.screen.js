@@ -3,20 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
-import { Image, ScrollView, StyleSheet } from 'react-native';
-import { getAll } from '../../shared/actions/Gallery.action';
-
-
-const styles = StyleSheet.create({
-    galleries: {
-        width: '90%',
-        marginTop: 30,
-        marginBottom: 30,
-        marginRight: 'auto',
-        marginLeft: 'auto',
-        paddingBottom: 25,
-    }
-});
+import { Image, Linking, ScrollView } from 'react-native';
+import { getAll } from '../../shared/actions/Promo.action';
 
 
 const Container = styled.View`
@@ -24,7 +12,7 @@ const Container = styled.View`
     width: 100%;
     margin: 0 auto;
 `;
-const Galleries = styled.View`
+const Promos = styled.View`
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -32,7 +20,7 @@ const Galleries = styled.View`
 `;
 
 
-const Gallery = styled.TouchableOpacity`
+const Promo = styled.TouchableOpacity`
     width: 48%;
     background: #FFFFFF;
     margin-bottom: 15px;
@@ -53,16 +41,10 @@ const Content = styled.View`
     margin: 10px auto;
 `;
 
-class GalleryScreen extends React.Component {
+class PromoScreen extends React.Component {
 
     onPressHandler = screen => {
         this.props.navigation.navigate(screen)
-    }
-
-    navigateSinglePage = gallery => {
-        this.props.navigation.navigate('GallerySingle', {
-            gallery: gallery
-        });
     }
 
     componentWillMount() {
@@ -76,29 +58,29 @@ class GalleryScreen extends React.Component {
         );
 
         if (this.props.status == 200) {
-            let gallaries = this.props.gallaries.map(gallery => {
+            let promos = this.props.promos.map(promo => {
                 return (
-                    <Gallery key={gallery.gallery_id} onPress={() => this.navigateSinglePage(gallery)}>
-                        <Image source={{ uri: gallery.image }} resizeMode={'cover'} style={{ height: 200 }} />
+                    <Promo key={promo.id} onPress={() => Linking.openURL(promo.link)}>
+                        <Image source={{ uri: promo.image }} resizeMode={'cover'} style={{ height: 200 }} />
                         <View>
-                            <Title>{gallery.image_title}</Title>
+                            <Title>{promo.title}</Title>
                         </View>
-                    </Gallery>
+                    </Promo>
                 )
             });
 
             container = (
-                <ScrollView contentContainerStyle={styles.infos} showsVerticalScrollIndicator={false}>
-                    <Galleries>
-                        {gallaries}
-                    </Galleries>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <Promos>
+                        { promos }
+                    </Promos>
                 </ScrollView>
             )
         }
 
         return (
             <Container>
-                <Header title={'Gallery'} onPressHandler={() => this.onPressHandler('Dashboard')} />
+                <Header title={'Promo'} onPressHandler={() => this.onPressHandler('Dashboard')} />
 
                 <Content>
                     {container}
@@ -111,8 +93,8 @@ class GalleryScreen extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        gallaries: state.GalleryReducer.gallaries,
-        status: state.GalleryReducer.get_all_status,
+        promos: state.PromoReducer.promos,
+        status: state.PromoReducer.get_all_status,
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -121,4 +103,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GalleryScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(PromoScreen);
